@@ -1,4 +1,4 @@
-# unicodeTools contain a couple of scripts for converting files to utf-8 based text
+# unicodeTools contains scripts for converting files to utf-8 based text
 ### Copyright 2018 by Shawn Rupp
 
 ## Download 
