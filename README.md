@@ -6,7 +6,22 @@
 	git clone https://github.com/icwells/unicodeTools.git
 
 ## toUTF8 converts files into utf-8 encoded files of the same format
-in progress...
+toUTF8 will convert a given input file to utf-8 (and only utf-8). If the encoding of the input file is known, it can be specified. 
+Otherwise, chardet's Universal detector will be called to determine the file's encoding. chardet must first be installed:
+
+	conda install chardet
+
+or
+
+	pip install chardet
+
+Now the script is ready to run:
+
+	python toUTF8.py {-e encoding} input_file
+
+The input file can be any text file. The output will be written to the same directory and will be visibly unchanged. If the encoding 
+of the source file is known, it can be passed with the "-e" flag. If not, the script will determine the encoding of the input file 
+on a line-by-line basis. This is done to avoid errors raised by inconsistent encoding in the source file.
 
 ## excelToText will convert xlsx files to tsv or csv. 
 ### Please note that this script will only extract text. It is not meant to extract hyperlinks, pictures, special formatting, etc.
