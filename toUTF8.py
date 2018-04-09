@@ -42,7 +42,7 @@ help = "Encoding of input file if known (otherwise encoding is determined on the
 help = "Path to input file. Output will be written in the same directory.")
 	args = parser.parse_args()
 	# Check infile and get outfile
-	if not os.path.isfile(infile):
+	if not os.path.isfile(args.i):
 		print(("\n\t[Error] Cannot find {}. Exiting.").format(args.i))
 		quit()
 	outfile = ("{}.UTF{}").format(args.i[:args.i.find(".")], args.i[args.i.rfind("."):])
