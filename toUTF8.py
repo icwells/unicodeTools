@@ -17,7 +17,7 @@ def recode(infile, outfile):
 					enc = chardet.detect(line)
 					s = codecs.decode(line, encoding=enc["encoding"])
 					output.write(s)
-				except UnicodeDecodeError:
+				except (UnicodeDecodeError, TypeError):
 					pass
 
 def convert(infile, outfile, enc):
