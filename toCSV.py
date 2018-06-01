@@ -5,12 +5,25 @@ import codecs
 from datetime import datetime
 from argparse import ArgumentParser
 
+def getDelim(line):
+	# Returns delimiter
+	for i in ["\t", ",", " "]:
+		if i in line:
+			return i
+	print("\n\t[Error] Cannot determine delimeter. Check file formatting. Exiting.\n")
+	quit()
+
 def convert(infile, outfile, delim):
 	# Writes contents of infile to outfile in UTF-8 usning single input encoding
+	first = True
 	print(("\n\tWriting {} to csv...").format(infile))
 	with codecs.open(outfile, "w", encoding="utf-8") as output:
 		with open(infile, "r") as f:
 			for line in f:
+				if first == True:
+					first = False
+					if not delim:
+						delim = getDelim(line)
 				try:
 					line = line.replace(",", ";")
 					line = line.replace(delim, ",")
@@ -22,7 +35,7 @@ def main():
 	start = datetime.now()
 	parser = ArgumentParser("This script will convert a given text file to utf-8 encoded csv file.")
 	parser.add_argument("-d", 
-help = "Delimeter of input file if known (otherwise it will be automatically determined).")
+help = "Delimeter of input file if known (wrap in quotes if more than one character) (otherwise it will be automatically determined).")
 	parser.add_argument("i", 
 help = "Path to input file (must be utf-8 encoded). Output will be written in the same directory.")
 	args = parser.parse_args()
