@@ -24,7 +24,7 @@ def main():
 	parser.add_argument("-d", 
 help = "Delimeter of input file if known (otherwise it will be automatically determined).")
 	parser.add_argument("i", 
-help = "Path to input file. Output will be written in the same directory.")
+help = "Path to input file (must be utf-8 encoded). Output will be written in the same directory.")
 	args = parser.parse_args()
 	# Check infile and get outfile
 	if not os.path.isfile(args.i):
@@ -33,7 +33,7 @@ help = "Path to input file. Output will be written in the same directory.")
 	if args.i[args.i.rfind("."):] == "csv":
 		print("\n\t[Error] Make sure input file is not comma seperated. Exiting.\n")
 		quit()
-	outfile = ("{}.csv").format(args.i[:args.i.find(".")], args.i[args.i.rfind("."):])
+	outfile = ("{}.csv").format(args.i[:args.i.rfind(".")])
 	convert(args.i, outfile, args.d)
 	print(("\tFinished. Runtime: {}\n").format(datetime.now()-start))
 
