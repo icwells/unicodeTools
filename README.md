@@ -23,6 +23,11 @@ The input file can be any text file. The output will be written to the same dire
 of the source file is known, it can be passed with the "-e" flag. If not, the script will determine the encoding of the input file 
 on a line-by-line basis. This is done to avoid errors raised by inconsistent encoding in the source file.
 
+## toCSV will convert a text file with given or determined delmeter to csv. 
+### The input file must be utf-8 encoded before converting to csv. 
+
+	python toCSV.py {-d delimter_if_known} input_file
+
 ## excelToText will convert xlsx files to tsv or csv. 
 ### Please note that this script will only extract text. It is not meant to extract hyperlinks, pictures, special formatting, etc.
 
