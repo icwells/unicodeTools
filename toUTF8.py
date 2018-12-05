@@ -22,9 +22,10 @@ def reformat(line, delim, csv):
 	else:
 		sep = "\t"
 		rep = " "
-	# Replace existing seperators
-	line = line.replace(sep, rep)
-	return sep.join(line.split(delim))
+	# Replace existing seperators (use illogical seperator to avoid adding columns)
+	line = line.replace(sep, "~")
+	line = sep.join(line.split(delim))
+	return line.replace("~", rep)
 
 def convert(infile, outfile, csv, tsv):
 	# Writes contents of infile to outfile in UTF-8. Encoding is determined line-by-line
