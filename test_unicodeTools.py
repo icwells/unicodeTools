@@ -26,7 +26,6 @@ def comapareTextFiles(act):
 	expected = textList(act.replace(".UTF8", ".test"))
 	for idx, i in enumerate(actual):
 		if i.strip():
-			print(i, expected[idx])
 			assert i == expected[idx]
 
 def test_toUTF8():
@@ -40,3 +39,14 @@ def test_toUTF8():
 		assert os.path.isfile(TESTDIR + i[2]) == True
 		comapareTextFiles(TESTDIR + i[2])
 		os.remove(TESTDIR + i[2])
+
+def test_excelToText():
+	# Performs black box tests on excelToText
+	cmd = ("python excelToText.py -i {} -o {}").format(TESTDIR, TESTDIR)
+	assert runProc(cmd, "stdout") == True
+	assert os.path.isfile(TESTDIR + "test.csv")
+	actual = textList(TESTDIR + "test.csv")
+	expected = textList(TESTDIR + "tab.test.csv")
+	for idx, i in enumerate(actual):
+		if i.strip():
+			assert i == expected[idx]

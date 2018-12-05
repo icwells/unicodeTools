@@ -6,13 +6,12 @@ import os
 from datetime import datetime
 from glob import glob
 from sys import stdout
+from unixpath import checkDir
 
-def excelToCSV(infile, outdir, tsv):
+def excelToCSV(infile, outdir, ext):
 	# Converts excel file to csv
-	ext = ".csv"
 	delim = ","
-	if tsv == True:
-		ext = ".tsv"
+	if ext == "tsv":
 		delim = "\t"
 	wb = xlrd.open_workbook(infile)
 	sheets = wb.sheet_names()
@@ -23,7 +22,7 @@ def excelToCSV(infile, outdir, tsv):
 			outfile = outdir + i + ext
 		else:
 			# Get file name form input file
-			outfile = outdir + infile[infile.rfind("/")+1:infile.rfind(".")] + ext
+			outfile = outdir + infile[infile.rfind("/")+1:infile.rfind(".")+1] + ext
 		with open(outfile, "w") as output:
 			for rownum in range(ws.nrows):
 				output.write(delim.join([str(x) for x in ws.row_values(rownum)]) + "\n")
@@ -37,7 +36,17 @@ def getFiles(indir, outdir, tsv):
 	print(("\n\tConverting Excel files to {}...").format(ext))
 	for idx,f in enumerate(files):
 		stdout.write(("\r\tConverting file {} of {}...").format(idx+1, len(files)))
-		excelToCSV(f, outdir, tsv)
+		excelToCSV(f, outdir, ext)
+
+def checkArgs(args):
+	# Checks input for errors
+	args.o = checkDir(args.o, True)
+	if os.path.isdir(args.i) == True:
+		args.i =  checkDir(args.i)
+	elif os.path.isfile(args.i) == False:
+		print("\n\t[Error] Please specify valid xls/xlsx file or directory. Exiting.")
+		quit()
+	return args
 
 def main():
 	starttime = datetime.now()
@@ -48,22 +57,12 @@ help = "Converts xlsx files to tab seperated text files (converts to csv by defa
 help = "Path to input file or directory (all xls(x) files in given directory will be converted).")
 	parser.add_argument("-o", default = "",
 help = "Path to output directory (Leave blank if current directory).")
-	args = parser.parse_args()
-	# Check output directory
-	if args.o[-1] != "/":
-		args.o += "/"
-	if not os.path.isdir(args.o):
-		os.mkdir(args.o)
+	args = checkArgs(parser.parse_args())
 	if os.path.isdir(args.i):
-		if args.i[-1] != "/":
-			args.i += "/"
 		getFiles(args.i, args.o, args.tsv)
 	elif ".xls" in args.i:
 		print(("\n\tConverting {} to csv...").format(args.i))
 		excelToCSV(args.i, args.o, args.tsv)
-	else:
-		print("\n\t[Error] Please specify valid xls/xlsx file or directory. Exiting.")
-		quit()
 	print(("\n\tFinished. Runtime: {}\n").format(datetime.now()-starttime))	
 
 if __name__ == "__main__":
