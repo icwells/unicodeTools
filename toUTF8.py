@@ -5,14 +5,7 @@ import codecs
 import chardet
 from datetime import datetime
 from argparse import ArgumentParser
-
-def getDelim(line):
-	# Returns delimiter
-	for i in ["\t", ",", " "]:
-		if i in line:
-			return i
-	print("\n\t[Error] Cannot determine delimeter. Check file formatting. Exiting.\n")
-	quit()
+from unixpath import *
 
 def reformat(line, delim, csv):
 	# Converts input line to csv/tsv
@@ -57,25 +50,24 @@ def checkArgs(args):
 	if args.tsv and args.csv:
 		print("\n\t[Error] Please specify no more than one of csv/tsv. Exiting.")
 		quit()		
-	if not os.path.isfile(args.i):
-		print(("\n\t[Error] Cannot find {}. Exiting.").format(args.i))
-		quit()
+	checkFile(args.i)
 	path = args.i[:args.i.find(".")]
-	ext = args.i[args.i.rfind("."):]
 	if args.csv == True:
-		ext = ".csv"
+		ext = "csv"
 	elif args.tsv == True:
-		ext = ".tsv"
-	return args, ("{}.UTF8{}").format(path, ext)
+		ext = "tsv"
+	else:
+		ext = getExt(args.i)
+	return args, ("{}.UTF8.{}").format(path, ext)
 
 def main():
 	start = datetime.now()
 	parser = ArgumentParser("This script will convert an input file's \
 encoding to utf-8.")
 	parser.add_argument("--csv", action = "store_true", default = False,
-help = "Optionally convert to comma seperated text files.")
+help = "Optionally convert to comma seperated text file.")
 	parser.add_argument("--tsv", action = "store_true", default = False,
-help = "Optionally convert to tab seperated text files.")
+help = "Optionally convert to tab seperated text file.")
 	parser.add_argument("i", 
 help = "Path to input file. Output will be written in the same directory.")
 	args, outfile = checkArgs(parser.parse_args())

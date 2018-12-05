@@ -5,11 +5,9 @@
 
 	git clone https://github.com/icwells/unicodeTools.git  
 
-## toUTF8 converts files into utf-8 encoded files of the same format
-toUTF8 will convert a given input file to utf-8 (and only utf-8). chardet's Universal detector will be called to 
-determine the file's encoding.
+Download and install [unixpath](https://github.com/icwells/unixpath).  
 
-chardet must first be installed:  
+Before using toUTF8, chardet must be installed:  
 
 	conda install chardet  
 
@@ -17,7 +15,9 @@ or
 
 	pip install chardet  
 
-Now the script is ready to run:  
+## toUTF8 converts files into utf-8 encoded files of the same format
+toUTF8 will convert a given input file to utf-8 (and only utf-8). chardet's Universal detector will be called to 
+determine the file's encoding.
 
 	python toUTF8.py {--csv/tsv} input_file  
 
