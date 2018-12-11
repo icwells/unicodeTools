@@ -8,6 +8,13 @@ from glob import glob
 from sys import stdout
 from unixpath import checkDir
 
+def getExtension(tsv):
+	# Returns output file extension
+	ext = "csv"
+	if tsv == True:
+		ext = "tsv"
+	return ext
+
 def excelToCSV(infile, outdir, ext):
 	# Converts excel file to csv
 	delim = ","
@@ -30,9 +37,7 @@ def excelToCSV(infile, outdir, ext):
 def getFiles(indir, outdir, tsv):
 	# Iterates over all excel files in directory
 	files = glob(indir + "*.xls*")
-	ext = "csv"
-	if tsv == True:
-		ext = "tsv"
+	ext = getExtension(tsv)
 	print(("\n\tConverting Excel files to {}...").format(ext))
 	for idx,f in enumerate(files):
 		stdout.write(("\r\tConverting file {} of {}...").format(idx+1, len(files)))
@@ -62,7 +67,7 @@ help = "Path to output directory (Leave blank if current directory).")
 		getFiles(args.i, args.o, args.tsv)
 	elif ".xls" in args.i:
 		print(("\n\tConverting {} to csv...").format(args.i))
-		excelToCSV(args.i, args.o, args.tsv)
+		excelToCSV(args.i, args.o, getExtension(args.tsv))
 	print(("\n\tFinished. Runtime: {}\n").format(datetime.now()-starttime))	
 
 if __name__ == "__main__":
