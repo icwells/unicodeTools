@@ -10,10 +10,16 @@ from unixpath import checkDir
 
 def getExtension(tsv):
 	# Returns output file extension
-	ext = "csv"
+	ext = ".csv"
 	if tsv == True:
-		ext = "tsv"
+		ext = ".tsv"
 	return ext
+
+def fmtSheetName(name):
+	# Formats sheet name for use as filename
+	if "," in name:
+		name = name[:name.rfind(",")]
+	return name.replace(" ", "_")
 
 def excelToCSV(infile, outdir, ext):
 	# Converts excel file to csv
@@ -26,13 +32,13 @@ def excelToCSV(infile, outdir, ext):
 		ws = wb.sheet_by_name(i)
 		if len(sheets) > 1:
 			# Get file names from sheets
-			outfile = outdir + i + ext
+			outfile = outdir + fmtSheetName(i) + ext
 		else:
 			# Get file name form input file
-			outfile = outdir + infile[infile.rfind("/")+1:infile.rfind(".")+1] + ext
+			outfile = outdir + infile[infile.rfind("/")+1:infile.rfind(".")] + ext
 		with open(outfile, "w") as output:
 			for rownum in range(ws.nrows):
-				output.write(delim.join([str(x) for x in ws.row_values(rownum)]) + "\n")
+				output.write(delim.join([str(x).replace(",", ";") for x in ws.row_values(rownum)]) + "\n")
 
 def getFiles(indir, outdir, tsv):
 	# Iterates over all excel files in directory
