@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/icwells/unicodeTools.svg?branch=master)](https://travis-ci.com/icwells/unicodeTools)
 # unicodeTools contains scripts for converting files to utf-8 based text  
 ### Copyright 2018 by Shawn Rupp  
 
