@@ -37,3 +37,11 @@ Input can either be a single xlsx file or a directory of them. Each sheet of eac
 By default, output will be in csv format (comma seperated), but specifying the --tsv flag will will produce tab seperated output. 
 If an input file has only one sheet, the corresponding output will have the same name with a new extension.   
 If a file has multiple sheets, the output files will have the name of the sheet they were extrated from.   
+
+## excelToText will convert csv/tsv/txt files to a single xlsx file.  
+
+	python toXLSX.py -i path_to_input_file_or_directory -o path_to_output_xlsx  
+
+This script is essentially the reverse of excelToText. It will convert a single text file or a directory of text files 
+(comma, tab, or space delimited) to a single xlsx file. The filename will be used as the sheet name in the output file. 
+Please be sure that the input file(s) have either a csv, tsv, or txt extension.  
