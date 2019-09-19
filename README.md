@@ -38,7 +38,7 @@ By default, output will be in csv format (comma seperated), but specifying the -
 If an input file has only one sheet, the corresponding output will have the same name with a new extension.   
 If a file has multiple sheets, the output files will have the name of the sheet they were extrated from.   
 
-## excelToText will convert csv/tsv/txt files to a single xlsx file.  
+## toXLSX will convert csv/tsv/txt files to a single xlsx file.  
 
 	python toXLSX.py -i path_to_input_file_or_directory -o path_to_output_xlsx  
 
